@@ -42,13 +42,13 @@ export const signup=async (req, res)=>{
 
 export const login =async (req, res)=>{
     try {
-        const {email, password} =req.body;
+        const {username, password} =req.body;
 
-        if(!email || !password){
+        if(!username || !password){
             return res.status(400).json({message: "All fields are required"})
         }
 
-        const user = await User.findOne({email})
+        const user = await User.findOne({username})
         if(!user){
             return res.status(400).json({error: "Invalid credentials"})
         }
@@ -58,7 +58,7 @@ export const login =async (req, res)=>{
                 generateToken(user._id, res);
                 return res.status(200).json({
                     username: user.username,
-                    email: user.email
+                    email: user.email,
                 }); 
             }
             else{
