@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import '../auth.css'
 import useLogin from '../hooks/useLogin';
 import useSignup from '../hooks/useSignup';
+import toast from 'react-hot-toast';
 
 
 const Login = () => {
@@ -24,11 +25,17 @@ const Login = () => {
 
   const handleSubmitLogin =async (e)=>{
     e.preventDefault();    
+    if (!username || !password) {
+      toast.error("Please fill in all fields");
+    }
     await loginUser(username, password)
   }
 
   const handleSubmitSignup =async (e)=>{
     e.preventDefault();    
+    if (!usernameSignup || !emailSignup || !passwordSignup) {
+      toast.error("Please fill in all fields");
+    }
     await signupUser(usernameSignup, emailSignup, passwordSignup)
   }
 
