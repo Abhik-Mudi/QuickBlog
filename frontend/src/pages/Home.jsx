@@ -5,11 +5,14 @@ import Search from '../components/Search'
 import Bloglist from '../components/Bloglist'
 import Subscribe from '../components/Subscribe'
 import Footer from '../components/Footer'
+import { useAuthContext } from '../context/authContext'
+import NavbarLogin from '../components/NavbarLogin'
 
 const Home = () => {
+  const {authUser} = useAuthContext()
   return (
     <div className='m-auto w-10/12 mt-2'>
-      <Navbar/>
+      {authUser ? <NavbarLogin />:<Navbar />}
       <Header/>
       <Search/>
       <Bloglist/>

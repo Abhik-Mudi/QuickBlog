@@ -10,6 +10,11 @@ const Comments = () => {
     content: '',
   })
 
+  const handleComment = (e) => {
+    e.preventDefault();
+    console.log(comment);
+    
+  }
   return (
     <div className='flex flex-col gap-2'>
       <p className='text-center font-bold'>Comments ({comments_data.length})</p>
@@ -27,10 +32,10 @@ const Comments = () => {
       })}
       <div className='m-auto mt-7 flex flex-col gap-2 w-1/2'>
         <h1>Add your comment</h1>
-        <form style={{"padding": 0}} className='w-full flex flex-col gap-2 justify-start' action="">
-          <input value={comment.name} onChange={(e)=>setComment({...comment, name:e.target.value})} className='text-sm font-light border px-2 border-gray-400 rounded-md w-full' type="text" placeholder='Name'/>
-          <textarea value={comment.content} onChange={(e)=>setComment({...comment, content:e.target.value})} className=' text-sm font-light border p-2 border-gray-400 rounded-lg w-full' name="" id="" placeholder='Comment'></textarea>
-          <button className='bg-[#5044E5] w-1/4 rounded-lg px-2 py-1 self-start text-white'>Submit</button>
+        <form onSubmit={handleComment} style={{"padding": 0}} className='w-full flex flex-col gap-2 justify-start' action="">
+          <input value={comment.name} onChange={(e)=>setComment({...comment, name:e.target.value})} className='text-sm font-light border px-2 py-1 border-gray-400 rounded-md w-full' type="text" placeholder='Name'/>
+          <textarea value={comment.content} onChange={(e)=>setComment({...comment, content:e.target.value})} rows={5} className=' text-sm font-light border p-2 border-gray-400 rounded-md w-full' name="" id="" placeholder='Comment'></textarea>
+          <button type='submit' onClick={handleComment} className='bg-[#5044E5] w-1/4 rounded-lg px-2 py-1 self-start text-white'>Submit</button>
         </form>
       </div>
     </div>

@@ -29,6 +29,8 @@ const Login = () => {
       toast.error("Please fill in all fields");
     }
     await loginUser(username, password)
+    setUsername("");
+    setPassword("");
   }
 
   const handleSubmitSignup =async (e)=>{
@@ -37,6 +39,9 @@ const Login = () => {
       toast.error("Please fill in all fields");
     }
     await signupUser(usernameSignup, emailSignup, passwordSignup)
+    setUsernameSignup("");  
+    setEmailSignup("");
+    setPasswordSignup("");
   }
 
   return (
