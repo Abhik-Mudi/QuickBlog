@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import Blog from '../../frontend/src/pages/Blog';
 
 const BlogPostSchema = new mongoose.Schema({
     title: {
@@ -25,7 +24,16 @@ const BlogPostSchema = new mongoose.Schema({
     },
     category: {
         type: String,
-    }
+    },
+    isPublished: {
+        type: Boolean,
+        // required: true,
+        default: false
+    },
+    comments: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Comment'
+    }]
 }, {timestamps: true});
 
 const BlogPost = mongoose.model("BlogPost", BlogPostSchema)

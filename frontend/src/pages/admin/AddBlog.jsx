@@ -2,9 +2,12 @@ import React, { useEffect, useRef, useState } from 'react'
 import { assets } from '../../assets/assets'
 import Quill from 'quill'
 import 'quill/dist/quill.snow.css'
+import useAddBlog from '../../hooks/useAddBlog'
 
 
 const AddBlog = () => {
+  const {addBlog} = useAddBlog();
+
   const editorRef = useRef(null)
   const quillRef = useRef(null)
 
@@ -14,23 +17,25 @@ const AddBlog = () => {
   const [description, setDescription] = useState('')
   const [image, setImage] = useState(null);
 
+  const handleSubmit = async (e) =>{
+    e.preventDefault();
+    const content = quillRef.current.root.innerHTML;
+
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("subtitle", subtitle);
+    formData.append("category", category);
+    formData.append("content", content);
+    formData.append("image", image);
+
+    await addBlog(formData)
+  }
+
   useEffect(() => {
     // initiate quill only once
     if (!quillRef.current && editorRef.current) {
       quillRef.current = new Quill(editorRef.current, {
         theme: 'snow',
-        // modules: {
-        //   toolbar: [
-        //     [{ header: [1, 2, 3, false] }],
-        //     ['bold', 'italic', 'underline', 'strike'],
-        //     [{ color: [] }, { background: [] }],
-        //     [{ list: 'ordered' }, { list: 'bullet' }],
-        //     [{ align: [] }],
-        //     ['blockquote', 'code-block'],
-        //     ['link', 'image'],
-        //     ['clean']
-        //   ]
-        // }
       })
     }
   }, [])
@@ -47,24 +52,24 @@ const AddBlog = () => {
         </label>
         <p>Blog Title</p>
         <label htmlFor="title">
-          <input value={title} onChange={(e) => setTitle(e.target.value)} className='border p-2 w-3/4 rounded' placeholder='Title' />
+          <input name='title' value={title} onChange={(e) => setTitle(e.target.value)} className='border p-2 w-3/4 rounded' placeholder='Title' />
         </label>
         <p>Blog Subtitle</p>
         <label htmlFor="subtitle">
-          <input value={subtitle} onChange={(e) => setSubtitle(e.target.value)} className='border p-2 w-3/4 rounded' placeholder='Subtitle' />
+          <input name='subtitle' value={subtitle} onChange={(e) => setSubtitle(e.target.value)} className='border p-2 w-3/4 rounded' placeholder='Subtitle' />
         </label>
         <p>Blog Category</p>
         <label htmlFor="category">
-          <input value={category} onChange={(e) => setCategory(e.target.value)} className='border p-2 w-3/4 rounded' placeholder='Category' />
+          <input name='category' value={category} onChange={(e) => setCategory(e.target.value)} className='border p-2 w-3/4 rounded' placeholder='Category' />
         </label>
         <p>Blog Description</p>
         <label htmlFor="content">
           <div className=' border w-3/4 rounded'>
-          <div ref={editorRef} className='min-h-45 border'></div>
+            <div ref={editorRef} className='min-h-45 border'></div>
           </div>
         </label>
         <div className='flex gap-2'>
-          <button className='bg-[#5044E5] text-white px-4 py-2 rounded'>Publish</button>
+          <button onClick={(e)=>handleSubmit(e)} className='bg-[#5044E5] text-white px-4 py-2 rounded'>Publish</button>
           <button className='border px-4 py-2 rounded'>Save draft</button>
         </div>
       </form>

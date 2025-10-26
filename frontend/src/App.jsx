@@ -1,4 +1,5 @@
 import React from 'react'
+import './index.css'
 import { Routes, Route, useNavigate, Navigate } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
 import Home from './pages/Home'
