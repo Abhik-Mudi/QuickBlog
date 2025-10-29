@@ -1,18 +1,30 @@
 import fs from "fs";
+import DOMPurify from 'dompurify';
+import { JSDOM } from 'jsdom';
 
 import imagekit from "../utils/ImageKit.js";
 import BlogPost from "../models/BlogPostModel.js";
-import { log } from "console";
 
-export const addBlog = async (req, res)=>{
+const htmlToText = (html) => {
+    const window = new JSDOM('').window;
+    const purify = DOMPurify(window);
+    const clean = purify.sanitize(html);
+    const div = window.document.createElement('div');
+    div.innerHTML = clean;
+    return div.textContent || div.innerText || '';
+};
+
+export const addBlog = async (req, res) => {
     try {
-        const {title, subtitle, content, category} = req.body;
+        const window = new JSDOM('').window;
+        const purify = DOMPurify(window);
+
+        const { title, subtitle, content, category } = req.body;
         const author = req.user.id;
-        console.log(req.user.username);
         const image = req.file;
 
-        if(!title || !category || !image){
-            return res.status(400).json({message: "All fields are required"});
+        if (!title || !category || !image) {
+            return res.status(400).json({ message: "All fields are required" });
         }
 
         // Upload image to ImageKit
@@ -26,52 +38,59 @@ export const addBlog = async (req, res)=>{
         const optimizedImageUrl = imagekit.url({
             path: response.filePath,
             transformation: [
-                {quality: "auto"},
-                {format: "webp"},
-                {width: '1280'}
+                { quality: "auto" },
+                { format: "webp" },
+                { width: '1280' }
             ],
             urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT.replace('http://', 'https://')
         })
 
-        const imageUrl= optimizedImageUrl;
-        
-        const newBlog= await BlogPost.create({
+        const imageUrl = optimizedImageUrl;
+
+        const newBlog = await BlogPost.create({
             title,
             subtitle,
             author,
-            content,
+            content: purify.sanitize(content),
             image: imageUrl,
             category,
         })
-        if(newBlog){
-            res.status(201).json({message: "Blog added successfully"})
+        if (newBlog) {
+            res.status(201).json({ message: "Blog added successfully" })
         }
 
 
     } catch (error) {
         console.log(error.message)
-        res.status(500).json({message: "Server Error", error: error.message});
-    }
-} 
-
-export const getBlogById = async (req, res)=>{
-    try {
-        const {id}= req.params;
-        const blog= await BlogPost.findById(id)
-        console.log(blog);
-        return res.status(200).json(blog)
-    } catch (error) {
-        console.log(error.message)
-        res.status(500).json({message: "Server Error", error: error.message});
+        res.status(500).json({ message: "Server Error", error: error.message });
     }
 }
 
-export const getAllBlogs = async (req, res)=>{
+export const getBlogById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const blog = await BlogPost.findById(id).populate("author", "username");
+        const blogWithPlainText = {
+            ...blog.toObject(),
+            content: htmlToText(blog.content)
+        };
+        return res.status(200).json(blogWithPlainText)
+    } catch (error) {
+        console.log(error.message)
+        res.status(500).json({ message: "Server Error", error: error.message });
+    }
+}
+
+export const getAllBlogs = async (req, res) => {
     try {
         const blogs = await BlogPost.find();
-        return res.status(200).json(blogs);
+        const processedBlogs = blogs.map(blog => ({
+            ...blog.toObject(),
+            content: htmlToText(blog.content)
+        }));
+        return res.status(200).json(processedBlogs);
     } catch (error) {
-        log(error.message)
-        res.status(500).json({message: "Server Error", error: error.message});
+        console.log(error.message)
+        res.status(500).json({ message: "Server Error", error: error.message });
     }
 }

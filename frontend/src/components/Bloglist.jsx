@@ -40,8 +40,8 @@ const Bloglist = () => {
             <div className='flex flex-wrap gap-3 mt-10'>
                 {blog_data.filter(blog=>menu=="All"?true:menu==blog.category).map((blog, idx) => {
                     return (
-                        <div key={blog._id} className='flex flex-col gap-1 w-[23%] overflow-hidden bg-gray-200 rounded-2xl shadow-lg'>
-                            <img  onClick={()=>navigate(`blog/${blog._id}`)}  className='rounded-t-2xl cursor-pointer' src={blog.image?.replace('http://', 'https://')} alt="" />
+                        <div key={blog._id}onClick={()=>navigate(`blog/${blog._id}`)} className='flex flex-col gap-1 w-[23%] overflow-hidden bg-gray-200 rounded-2xl shadow-lg'>
+                            <img  className='rounded-t-2xl cursor-pointer' src={blog.image?.replace('http://', 'https://')} alt="" />
                             <div className='p-7'>
                                 <button className='bg-[#5044E5]/20 w-1/2 text-xs text-[#5044E5] px-2 py-1 rounded-xl'>{blog.category}</button>
                                 <h1 className='font-semibold mt-5'>{blog.title}</h1>
