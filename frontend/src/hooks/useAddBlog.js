@@ -2,7 +2,9 @@ import React from 'react'
 import axios from "axios"
 import toast from 'react-hot-toast'
 
-const API_URL = import.meta.env.IS_PRODUCTION ? import.meta.env.VITE_API_URL : 'localhost:5000';
+const isProduction = import.meta.env.IS_PRODUCTION;
+console.log(isProduction);
+const API_URL = isProduction ? import.meta.env.VITE_API_URL : 'localhost:5000';
 
 const useAddBlog = () => {
 
