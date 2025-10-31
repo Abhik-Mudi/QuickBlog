@@ -5,8 +5,8 @@ import isLoggedIn from "../middlewares/isLoggedIn.js";
 
 const blogRouter = express.Router();
 
-blogRouter.get("/:id", getBlogById);
 blogRouter.get("/", getAllBlogs);
+blogRouter.get("/:id", getBlogById);
 blogRouter.post("/add", isLoggedIn, upload.single("image"), addBlog)
 
 export default blogRouter;
