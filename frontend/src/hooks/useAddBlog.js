@@ -3,6 +3,7 @@ import axios from "axios"
 import toast from 'react-hot-toast'
 
 const isProduction = import.meta.env.IS_PRODUCTION;
+// checking the value of isProduction
 console.log(isProduction);
 const API_URL = isProduction ? import.meta.env.VITE_API_URL : 'localhost:5000';
 
