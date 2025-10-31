@@ -2,6 +2,8 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { useAuthContext } from "../context/authContext";
 
+const API_URL = import.meta.env.IS_PRODUCTION ? import.meta.env.VITE_API_URL : 'localhost:5000';
+
 const useLogin = ()=>{
     const {setAuthUser}= useAuthContext();
 
@@ -10,7 +12,7 @@ const useLogin = ()=>{
     const loginUser= async (username, password)=>{
         setLoading(true)
         try {
-            const res= await fetch("/api/auth/login", {
+            const res= await fetch(`${API_URL}/api/auth/login`, {
                 method: "POST",
                 headers: { "content-type" : "application/json"},
                 body: JSON.stringify({username, password})
