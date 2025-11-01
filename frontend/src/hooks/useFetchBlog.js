@@ -18,7 +18,7 @@ const useFetchBlog = () => {
     
     const fetchBlogById = async (id)=>{
         try {
-            const res = await fetch(`/api/blogs/${id}`);
+            const res = await fetch(`${API_URL}/api/blogs/${id}`);
             const data = await res.json();
             return data;
         } catch (error) {
