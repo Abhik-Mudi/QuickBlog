@@ -16,7 +16,8 @@ const useLogin = ()=>{
             const res= await fetch(`${API_URL}/api/auth/login`, {
                 method: "POST",
                 headers: { "content-type" : "application/json"},
-                body: JSON.stringify({username, password})
+                body: JSON.stringify({username, password}),
+                credentials: "include"
             });
             const data=await res.json();
             
