@@ -3,13 +3,20 @@ import axios from "axios"
 import toast from 'react-hot-toast'
 
 const isProduction = import.meta.env.PROD;
+console.log(isProduction)
 const API_URL = isProduction ? import.meta.env.VITE_API_URL : 'http://localhost:5000';
+console.log(API_URL)
 
 const useAddBlog = () => {
 
     const addBlog = async (formData) => {
         try {
-            const res = await axios.post(`${API_URL}/api/blogs/add`, formData);
+            const res = await axios.post(`${API_URL}/api/blogs/add`, formData, {
+                withCredentials: true,
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
 
             toast.success("Blog added successfully")
             return res.data;
