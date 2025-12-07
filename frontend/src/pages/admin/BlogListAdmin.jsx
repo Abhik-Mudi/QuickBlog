@@ -1,12 +1,25 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { blog_data } from '../../assets/assets'
+import useFetchBlog from '../../hooks/useFetchBlog'
 
 const BlogListAdmin = () => {
+  const {fetchBlogs} = useFetchBlog();
+  const [blogs, setBlogs] = useState([])
+
+  const fetchBlog= async()=>{
+    const data= await fetchBlogs();
+    setBlogs(data)
+  }
+
+  useEffect(() => {
+    fetchBlog();
+  }, [])
+  
   return (
     <div className='bg-white rounded-2xl p-6 shadow'>
       <h2 className='text-lg font-semibold mb-4'>All Blogs</h2>
       <div className='divide-y'>
-        {blog_data.map((b) => (
+        {blogs.map((b) => (
           <div key={b._id} className='py-3 flex items-center justify-between'>
             <div>
               <p className='font-medium'>{b.title}</p>

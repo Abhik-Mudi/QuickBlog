@@ -2,10 +2,12 @@ import express from "express"
 import dotenv from "dotenv"
 import cors from "cors"
 
-import authRouter from "./routes/auth.routes.js";
-import blogRouter from "./routes/blog.routes.js";
 import dbConnect from "./db/dbConnect.js";
 import cookieParser from "cookie-parser";
+
+import authRouter from "./routes/auth.routes.js";
+import blogRouter from "./routes/blog.routes.js";
+import commentRouter from "./routes/comment.routes.js";
 
 const app=express();
 const PORT=process.env.PORT || 5000;
@@ -28,6 +30,7 @@ app.get('/', (req, res) => {
 
 app.use("/api/auth", authRouter);
 app.use("/api/blogs", blogRouter);
+app.use("/api/comments", commentRouter);
 
 app.listen(PORT, ()=>{
     dbConnect();
