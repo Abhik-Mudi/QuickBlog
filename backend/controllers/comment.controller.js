@@ -11,6 +11,15 @@ export const getComments = async (req, res)=>{
     }
 }
 
+export const getAllComments = async(req, res)=>{
+    try {
+        const comments=await Comment.find().populate("author", "username");
+        res.status(200).json(comments)
+    } catch (error) {
+        res.status(500).json({message: "Internal Server Error", error:error.message})
+    }
+}
+
 export const addComment = async(req, res)=>{
     try {
         const {content} =req.body;
