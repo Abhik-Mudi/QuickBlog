@@ -34,5 +34,6 @@ app.use("/api/comments", commentRouter);
 
 app.listen(PORT, ()=>{
     dbConnect();
+    console.log(process.env.NODE_ENV);
     console.log(`Server is running on port ${PORT}`);
 })
