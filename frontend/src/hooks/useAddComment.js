@@ -9,10 +9,10 @@ const useAddComment = () => {
     try {
         const res = await fetch(`${API_URL}/api/comments/${id}`, {
             method: 'POST',
+            credentials: 'include',
             headers: {
                 'Content-Type' : 'application/json'
             },
-            credentials: 'include',
             body: JSON.stringify({content}),
         })
         const data=await res.json();
