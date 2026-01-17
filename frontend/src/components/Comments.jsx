@@ -35,10 +35,10 @@ const Comments = () => {
 
   return (
     <div className='flex flex-col gap-2'>
-      <p className='text-center font-bold'>Comments ({commentList.length})</p>
+      <p className='text-center font-medium'>Comments ({commentList.length})</p>
       {commentList && commentList.map((comment, idx) => {
         return (
-            <div className='bg-[#e9edfad5] m-auto w-1/2 flex flex-col p-4 border-1 border-gray-300' key={idx}>
+            <div className='bg-[#e9edfad5] m-auto md:w-1/2 w-[80%] flex flex-col p-4 border-1 border-gray-300' key={idx}>
                 <div className='flex justify-between items-center'>
                     
                     <span className='text-sm flex items-center gap-2'><FaRegCircleUser />{comment.author.username}</span>
@@ -48,7 +48,7 @@ const Comments = () => {
             </div>
         )
       })}
-      <div className='m-auto mt-7 flex flex-col gap-2 w-1/2'>
+      <div className='m-auto mt-7 flex flex-col gap-2 md:w-1/2 w-[80%]'>
         <h1>Add your comment</h1>
         <form onSubmit={handleComment} style={{"padding": 0}} className='w-full flex flex-col gap-2 justify-start' action="">
           <textarea value={comment.content} onChange={(e)=>setComment({...comment, content:e.target.value})} rows={5} className=' text-sm font-light border p-2 border-gray-400 rounded-md w-full' name="" id="" placeholder='Comment'></textarea>

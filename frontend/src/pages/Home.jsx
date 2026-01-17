@@ -11,7 +11,7 @@ import NavbarLogin from '../components/NavbarLogin'
 const Home = () => {
   const {authUser} = useAuthContext()
   return (
-    <div className='m-auto w-10/12 mt-2'>
+    <div className='m-auto md:w-10/12 mt-2'>
       {authUser ? <NavbarLogin />:<Navbar />}
       <Header/>
       <Search/>

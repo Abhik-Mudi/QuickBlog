@@ -28,7 +28,7 @@ const Blog = () => {
 
 
   return (
-    <div className='m-auto w-10/12 mt-2'>
+    <div className='m-auto md:w-10/12 mt-2'>
       {authUser ? <NavbarLogin /> : <Navbar />}
       {blog ? (
         <>
