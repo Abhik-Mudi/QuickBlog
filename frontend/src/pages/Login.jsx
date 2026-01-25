@@ -49,7 +49,7 @@ const Login = () => {
       <div className="forms-container">
         <div className="signin-signup">
           {/* Sign In Form */}
-          <form onSubmit={(e)=>handleSubmitLogin(e)} className="sign-in-form">
+          <form onSubmit={(e)=>handleSubmitLogin(e)} className={`sign-in-form ${isSignUpMode?'hidden':'block'}`}>
             <h2 className="title">Sign In</h2>
             <div className="input-field">
               <i className="fas fa-user"></i>
@@ -60,6 +60,9 @@ const Login = () => {
               <input type="password" value={password} onChange={(e)=>setPassword(e.target.value)} placeholder="Password" name='password'/>
             </div>
             <input type="submit" value="Login" className="btn solid" />
+            <div className={`switch-signin ${isSignUpMode?'hidden':'block'}`}>
+              Don't have an account? <button type="button" onClick={toggleMode} className='text-[#4d84e2] font-semibold'>Sign Up</button>
+            </div>
           </form>
 
           {/* Sign Up Form */}
@@ -78,7 +81,11 @@ const Login = () => {
               <input type="password" value={passwordSignup} onChange={(e)=>setPasswordSignup(e.target.value)} placeholder="Password" name='passwordSignup' />
             </div>
             <input type="submit" value="Sign Up" className="btn solid" />
+            <div className={`switch-signup ${!isSignUpMode?'hidden':'block'}`}>
+              Already have an account? <button type="button" onClick={toggleMode} className={`text-[#4d84e2] font-semibold`}>Sign In</button>
+            </div>
           </form>
+
         </div>
       </div>
 

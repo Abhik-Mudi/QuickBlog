@@ -213,3 +213,173 @@ form.sign-in-form {
   opacity: 0;
   z-index: 1;
 }
+
+.switch-signin,
+.switch-signup {
+  display: none;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 1rem;
+}
+
+.switch-signin button,
+.switch-signup button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  padding: 0;
+  margin-left: 0.3rem;
+}
+
+.switch-signin button:hover,
+.switch-signup button:hover {
+  text-decoration: underline;
+}
+
+/* Tablet and smaller screens */
+@media screen and (max-width: 768px) {
+  .container::before {
+    width: 1200px;
+    height: 1200px;
+    top: -20%;
+    right: 45%;
+  }
+
+  .signin-signup {
+    left: 50% !important;
+    width: 90%;
+    transform: translate(-50%, -50%);
+  }
+
+  form {
+    padding: 2rem 1.5rem;
+  }
+
+  .input-field {
+    max-width: 100%;
+    height: 50px;
+  }
+
+  .title {
+    font-size: 1.8rem;
+  }
+}
+
+/* Mobile screens */
+@media screen and (max-width: 600px) {
+  .panels-container {
+    display: none;
+  }
+
+  .container::before {
+    display: none;
+  }
+
+  .container {
+    min-height: auto;
+    overflow-y: auto;
+  }
+
+  .forms-container {
+    position: relative;
+    width: 100%;
+    height: auto;
+    top: auto;
+    left: auto;
+  }
+
+  .signin-signup {
+    position: relative;
+    width: 100%;
+    height: auto;
+    top: 0;
+    left: 0 !important;
+    transform: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 2rem 0;
+    margin: 0;
+  }
+
+  .sign-in-form,
+  .sign-up-form {
+    width: 100%;
+    height: auto;
+    padding: 1.5rem 1rem;
+    position: relative;
+    bottom: auto;
+    left: auto;
+    opacity: 1 !important;
+    z-index: auto !important;
+    transform: none !important;
+  }
+
+  .sign-up-form {
+    display: none;
+  }
+
+  .container.sign-up-mode .sign-up-form {
+    display: block;
+  }
+
+  .container.sign-up-mode .sign-in-form {
+    display: none;
+  }
+
+  form {
+    overflow: visible;
+    padding: 0 1rem;
+    grid-template-columns: none;
+    grid-column: auto;
+    grid-row: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .input-field {
+    max-width: 100%;
+    height: 48px;
+    grid-template-columns: 12% 88%;
+    margin: 10px 0;
+  }
+
+  .input-field i {
+    font-size: 0.95rem;
+    line-height: 48px;
+  }
+
+  .input-field input {
+    font-size: 0.95rem;
+  }
+
+  .title {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .btn {
+    width: 100%;
+    max-width: 250px;
+    height: 45px;
+    font-size: 0.9rem;
+    margin: 1rem 0;
+  }
+
+  /* Show toggle buttons on mobile */
+  .switch-signin,
+  .switch-signup {
+    display: block;
+  }
+
+  .switch-signin.hidden,
+  .switch-signup.hidden {
+    display: none;
+  }
+}
