@@ -26,7 +26,19 @@ const useFetchBlog = () => {
         }
     }
 
-    return {fetchBlogs, fetchBlogById}
+    const fetchBlogByUserId=async(id)=>{
+        try {
+            const res=await fetch(`${API_URL}/api/blogs/user/${id}`, {
+                credentials: 'include',
+            });
+            const data=await res.json();
+            return data;
+        } catch (error) {
+            toast.error(error.message)
+        }
+    }
+
+    return {fetchBlogs, fetchBlogById, fetchBlogByUserId}
 }
 
 export default useFetchBlog

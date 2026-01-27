@@ -1,14 +1,25 @@
 import React, { useEffect, useState } from 'react'
 import { blog_data } from '../../assets/assets'
 import useFetchBlog from '../../hooks/useFetchBlog'
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 const BlogListAdmin = () => {
-  const {fetchBlogs} = useFetchBlog();
+  const navigate=useNavigate()
+  const {fetchBlogByUserId} = useFetchBlog();
+  const [isLoading, setIsLoading]=useState(false)
   const [blogs, setBlogs] = useState([])
 
   const fetchBlog= async()=>{
-    const data= await fetchBlogs();
-    setBlogs(data)
+    setIsLoading(true)
+    try {
+      const data= await fetchBlogByUserId();
+      setBlogs(data)
+    } catch (error) {
+      toast.error(error.message)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   useEffect(() => {
@@ -19,8 +30,8 @@ const BlogListAdmin = () => {
     <div className='bg-white rounded-2xl p-6 shadow'>
       <h2 className='text-lg font-semibold mb-4'>All Blogs</h2>
       <div className='divide-y'>
-        {blogs.map((b) => (
-          <div key={b._id} className='py-3 flex items-center justify-between'>
+        {!isLoading && blogs.map((b) => (
+          <div key={b._id} onClick={()=>navigate(`/blog/${b._id}`)} className='py-3 flex items-center justify-between'>
             <div>
               <p className='font-medium'>{b.title}</p>
               <p className='text-xs text-gray-500'>{b.category}</p>

@@ -355,6 +355,10 @@ form.sign-in-form {
     line-height: 48px;
   }
 
+  input{
+    width: 100%;
+  }
+
   .input-field input {
     font-size: 0.95rem;
   }

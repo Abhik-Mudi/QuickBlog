@@ -27,23 +27,22 @@ const AdminPanel = ({ children }) => {
         </div>
 
         {/* Main content */}
-          <main className="flex-1 px-6">
+          <main className="flex-1 md:px-6 px-2">
             <div className="max-w-7xl mx-auto h-[calc(100vh-5rem)] overflow-auto pb-8">
             {/* Header */}
             <div className="rounded-2xl bg-gradient-to-r from-[#5044E5] to-indigo-600 text-white p-6 mb-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <h1 className="text-2xl font-semibold">Admin Dashboard</h1>
-                  <p className="text-sm opacity-90 mt-1">Manage posts, comments and users</p>
+                  <h1 className="md:text-2xl text-xl font-semibold">Dashboard</h1>
+                  <p className="text-sm opacity-90 mt-1">Manage your posts and comments</p>
                 </div>
                 <div className="flex items-center gap-3">
                   <button onClick={()=>navigate("/admin/add")} className="bg-white/20 text-white px-4 py-2 rounded-lg text-sm">Create Post</button>
-                  <button className="bg-white/10 text-white px-4 py-2 rounded-lg text-sm">Settings</button>
+                  <button onClick={()=>navigate("/admin")} className="bg-white/10 text-white px-4 py-2 rounded-lg text-sm">Dashboard</button>
                 </div>
               </div>
             </div>
 
-            {/* If children are provided (admin sub-pages), render them; otherwise show default dashboard */}
             {children ? (
               <div className="mb-6">{children}</div>
             ) : (
@@ -67,7 +66,7 @@ const AdminPanel = ({ children }) => {
                 <div className="bg-white rounded-2xl p-4 shadow">
 
                   <div className="flex items-center justify-between mb-4">
-                    <h2 className="text-lg font-semibold">Recent Posts</h2>
+                    <h2 className="text-lg font-semibold">Your Posts</h2>
                     <button onClick={()=>navigate("/admin/list")} className="text-sm bg-[#5044E5] text-white px-3 py-1 rounded-md">View all</button>
                   </div>
 

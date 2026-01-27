@@ -94,3 +94,17 @@ export const getAllBlogs = async (req, res) => {
         res.status(500).json({ message: "Server Error", error: error.message });
     }
 }
+
+export const getBlogsByUserId=async (req, res)=>{
+    try {
+        const userBlogs=await BlogPost.find({author: req.user.id})
+        const processedBlogs = userBlogs.map(blog => ({
+            ...blog.toObject(),
+            content: htmlToText(blog.content)
+        }));
+        return res.status(200).json(processedBlogs);
+    } catch (error) {
+        console.log(error.message)
+        res.status(500).json({ message: "Server Error", error: error.message });
+    }
+}

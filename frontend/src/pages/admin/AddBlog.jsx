@@ -64,7 +64,7 @@ const AddBlog = () => {
         </label>
         <p>Blog Description</p>
         <label htmlFor="content">
-          <div className=' border w-3/4 rounded'>
+          <div className=' border md:w-3/4 w-full rounded'>
             <div ref={editorRef} className='min-h-45 border'></div>
           </div>
         </label>
