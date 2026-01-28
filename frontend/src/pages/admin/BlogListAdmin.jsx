@@ -28,7 +28,7 @@ const BlogListAdmin = () => {
   
   return (
     <div className='bg-white rounded-2xl p-6 shadow'>
-      <h2 className='text-lg font-semibold mb-4'>All Blogs</h2>
+      <h2 className='text-lg font-semibold mb-4'>Your Blogs</h2>
       <div className='divide-y'>
         {!isLoading && blogs.map((b) => (
           <div key={b._id} onClick={()=>navigate(`/blog/${b._id}`)} className='py-3 flex items-center justify-between'>

@@ -45,3 +45,17 @@ export const addComment = async(req, res)=>{
         res.status(500).json({ message: "Internal Server Error", error: error.message });
     }
 }
+
+export const getAllCommentsByUser=async (req, res)=>{
+    try {
+        console.log(req.user);
+        const blog=await Comment.find({author: req.user.id}).populate("post", "title");
+        if(!blog){
+            return res.status(404).json({message: "Blog not found"});
+        }
+        return res.status(200).json(blog)
+    } catch (error) {
+        console.log(error.message)
+        res.status(500).json({ message: "Internal Server Error", error: error.message });
+    }
+}

@@ -26,7 +26,19 @@ const useFetchComment = () => {
     }
   }
 
-  return {fetchComment, fetchAllComments};
+  const fetchAllCommentsByUser=async (id)=>{
+    try {
+      const res= await fetch(`${API_URL}/api/comments/user/${id}`,{
+        credentials:'include',
+      })
+      const data=await res.json();
+      return data;
+    } catch (error) {
+      toast.error(error.message)
+    }
+  }
+
+  return {fetchComment, fetchAllComments, fetchAllCommentsByUser};
 }
 
 export default useFetchComment
