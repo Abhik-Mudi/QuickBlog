@@ -1,19 +1,58 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import NavbarLogin from '../components/NavbarLogin'
 import Sidebar from '../components/Sidebar'
-import { blog_data, dashboard_data } from '../assets/assets';
+import { blog_data } from '../assets/assets';
 import { MdOutlineDashboard } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
+import useFetchBlog from '../hooks/useFetchBlog';
+import useFetchComment from '../hooks/useFetchComment';
+import {formatDate} from "../utils/convertTime.js"
 
 const AdminPanel = ({ children }) => {
 
   const navigate = useNavigate();
+  const {fetchBlogByUserId}=useFetchBlog()
+  const {fetchAllCommentsByUser}=useFetchComment()
 
-  const recent = [
-    { id: '1', title: 'Understanding React Hooks', author: 'Alice', date: '2025-07-10' },
-    { id: '2', title: 'Styling with Tailwind', author: 'Bob', date: '2025-07-02' },
-    { id: '3', title: 'Deploying Node apps', author: 'Charlie', date: '2025-06-22' },
-  ];
+  const [isLoading, setIsLoading]=useState(false)
+  const [recent, setRecent]=useState([])
+  const [comments, setComments]=useState([])
+
+  const fetchBlog= async()=>{
+    setIsLoading(true)
+    try {
+      const data= await fetchBlogByUserId();
+      const comm=await fetchAllCommentsByUser();
+      console.log(data);
+      setComments(comm)
+      setRecent(data)
+    } catch (error) {
+      toast.error(error.message)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    fetchBlog();
+    console.log(recent);
+    
+  }, [])
+
+  const dashboard_data={
+    "Blogs":{ 
+      path: 'list',
+      val: recent.length
+    },
+    "Comments":{
+      path: 'comments',
+      val: comments.length
+    },
+    "Drafts": {
+      path: 'add',
+      val: 0
+    },
+  }
 
 
   return (
@@ -50,9 +89,9 @@ const AdminPanel = ({ children }) => {
                 {/* Stat cards */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
                   {Object.entries(dashboard_data).map(([key, value]) => (
-                    <div key={key} className="bg-white rounded-2xl p-4 shadow-sm flex items-center justify-between">
+                    <div key={value.path} onClick={()=>navigate(`/admin/${value.path}`)} className="bg-white rounded-2xl p-4 shadow-sm flex items-center justify-between">
                       <div>
-                        <p className="text-sm text-gray-500">{value}</p>
+                        <p className="text-sm font-medium text-gray-500">{value.val}</p>
                         <p className="text-xl font-bold text-gray-900 mt-1">{key}</p>
                       </div>
                       <div className="bg-[#F2F0FF] text-[#5044E5] p-3 rounded-lg">
@@ -71,11 +110,12 @@ const AdminPanel = ({ children }) => {
                   </div>
 
                   <div className="divide-y">
+                    {recent.length==0 && <div className='text-gray-500'>No posts yet</div>}
                     {recent.map((post) => (
-                      <div key={post.id} className="py-3 flex items-center justify-between">
+                      <div key={post._id} className="py-3 flex items-center justify-between">
                         <div>
                           <p className="font-medium">{post.title}</p>
-                          <p className="text-xs text-gray-500">by {post.author} • {post.date}</p>
+                          <p className="text-xs text-gray-500">by {post.author.username} • {formatDate(post.updatedAt)}</p>
                         </div>
                       </div>
                     ))}

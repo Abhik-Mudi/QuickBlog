@@ -97,7 +97,7 @@ export const getAllBlogs = async (req, res) => {
 
 export const getBlogsByUserId=async (req, res)=>{
     try {
-        const userBlogs=await BlogPost.find({author: req.user.id})
+        const userBlogs=await BlogPost.find({author: req.user.id}).populate("author", "username")
         const processedBlogs = userBlogs.map(blog => ({
             ...blog.toObject(),
             content: htmlToText(blog.content)

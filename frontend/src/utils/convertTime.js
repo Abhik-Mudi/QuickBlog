@@ -5,7 +5,7 @@ export function formatDate(isoString) {
         year: 'numeric',
         month: 'long',
         day: 'numeric',
-        timeZone: 'Asia/Kolkata' // Adjust if needed
+        timeZone: 'Asia/Kolkata' 
     };
 
     return date.toLocaleDateString('en-IN', options);
