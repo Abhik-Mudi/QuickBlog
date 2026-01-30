@@ -34,9 +34,7 @@ const AdminPanel = ({ children }) => {
   }
 
   useEffect(() => {
-    fetchBlog();
-    console.log(recent);
-    
+    fetchBlog();    
   }, [])
 
   const dashboard_data={
@@ -111,7 +109,7 @@ const AdminPanel = ({ children }) => {
 
                   <div className="divide-y">
                     {recent.length==0 && <div className='text-gray-500'>No posts yet</div>}
-                    {recent.map((post) => (
+                    {recent?.map((post) => (
                       <div key={post._id} className="py-3 flex items-center justify-between">
                         <div>
                           <p className="font-medium">{post.title}</p>
