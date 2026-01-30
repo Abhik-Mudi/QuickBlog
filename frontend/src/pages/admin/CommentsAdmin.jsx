@@ -19,7 +19,7 @@ const CommentsAdmin = () => {
     <div className='bg-white rounded-2xl p-6 shadow'>
       <h2 className='text-lg font-semibold mb-4'>Comments</h2>
       <div className='divide-y'>
-        {comments.length==0 && <div className='text-gray-500'>No comments yet</div>}
+        {comments?.length==0 && <div className='text-gray-500'>No comments yet</div>}
         {comments?.map((c, idx) => (
           <div key={idx} className='py-3 flex items-start justify-between'>
             <div>

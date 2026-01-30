@@ -30,7 +30,7 @@ const BlogListAdmin = () => {
     <div className='bg-white rounded-2xl p-6 shadow'>
       <h2 className='text-lg font-semibold mb-4'>Your Blogs</h2>
       <div className='divide-y'>
-        {blogs.length==0 && <div className='text-gray-500'>No blogs yet</div>}
+        {blogs?.length==0 && <div className='text-gray-500'>No blogs yet</div>}
         {!isLoading && blogs?.map((b) => (
           <div key={b._id} onClick={()=>navigate(`/blog/${b._id}`)} className='py-3 flex items-center justify-between'>
             <div>
