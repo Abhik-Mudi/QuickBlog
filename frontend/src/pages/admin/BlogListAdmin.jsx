@@ -3,11 +3,13 @@ import { blog_data } from '../../assets/assets'
 import useFetchBlog from '../../hooks/useFetchBlog'
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import { AlertDialogDemo } from '../../components/DeleteModal';
 
 const BlogListAdmin = () => {
   const navigate=useNavigate()
   const {fetchBlogByUserId} = useFetchBlog();
   const [isLoading, setIsLoading]=useState(false)
+  const [isDeleteModal, setIsDeleteModal]=useState(false)
   const [blogs, setBlogs] = useState([])
 
   const fetchBlog= async()=>{
@@ -20,6 +22,11 @@ const BlogListAdmin = () => {
     } finally {
       setIsLoading(false)
     }
+  }
+
+  const handleClick=async (e)=>{
+    e.stopPropagation()
+    e.preventDefault();
   }
 
   useEffect(() => {
@@ -37,9 +44,8 @@ const BlogListAdmin = () => {
               <p className='font-medium'>{b.title}</p>
               <p className='text-xs text-gray-500'>{b.category}</p>
             </div>
-            <div className='flex items-center gap-2'>
-              <button className='text-sm text-[#5044E5] border border-[#5044E5] px-3 py-1 rounded-md'>Edit</button>
-              <button className='text-sm text-red-500 border border-red-200 px-3 py-1 rounded-md'>Delete</button>
+            <div onClick={handleClick} className='flex items-center gap-2'>
+              <AlertDialogDemo id={b._id} size="md" onDeleteSuccess={fetchBlog}/>
             </div>
           </div>
         ))}

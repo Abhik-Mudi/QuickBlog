@@ -108,3 +108,14 @@ export const getBlogsByUserId=async (req, res)=>{
         res.status(500).json({ message: "Server Error", error: error.message });
     }
 }
+
+export const deleteBlogById=async (req, res)=>{
+    try {
+        const {id}=req.body;
+        const deletedBlog=await BlogPost.findOneAndDelete({_id: id});
+        return res.status(200).json({message: "Blog deleted successfully"});
+    } catch (error) {
+        console.log(error.message)
+        res.status(500).json({message: "Internal Server Error"})
+    }
+}

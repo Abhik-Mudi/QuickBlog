@@ -7,8 +7,10 @@ import { useNavigate } from 'react-router-dom';
 import useFetchBlog from '../hooks/useFetchBlog';
 import useFetchComment from '../hooks/useFetchComment';
 import {formatDate} from "../utils/convertTime.js"
+import { useAuthContext } from '@/context/authContext';
 
 const AdminPanel = ({ children }) => {
+  const {authUser}=useAuthContext()
 
   const navigate = useNavigate();
   const {fetchBlogByUserId}=useFetchBlog()
@@ -23,7 +25,7 @@ const AdminPanel = ({ children }) => {
     try {
       const data= await fetchBlogByUserId();
       const comm=await fetchAllCommentsByUser();
-      console.log(data);
+      console.log(comm);
       setComments(comm)
       setRecent(data)
     } catch (error) {
@@ -109,7 +111,7 @@ const AdminPanel = ({ children }) => {
 
                   <div className="divide-y">
                     {recent?.length==0 && <div className='text-gray-500'>No posts yet</div>}
-                    {recent?.map((post) => (
+                    {recent?.slice(0, 3).map((post) => (
                       <div key={post._id} className="py-3 flex items-center justify-between">
                         <div>
                           <p className="font-medium">{post.title}</p>
