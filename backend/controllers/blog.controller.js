@@ -4,6 +4,7 @@ import { JSDOM } from 'jsdom';
 
 import imagekit from "../utils/ImageKit.js";
 import BlogPost from "../models/BlogPostModel.js";
+import Comment from "../models/CommentModel.js";
 
 const htmlToText = (html) => {
     const window = new JSDOM('').window;
@@ -113,7 +114,11 @@ export const deleteBlogById=async (req, res)=>{
     try {
         const {id}=req.body;
         const deletedBlog=await BlogPost.findOneAndDelete({_id: id});
-        return res.status(200).json({message: "Blog deleted successfully"});
+        const comments=deletedBlog.comments;
+        for(let i=0;i<comments.length;i++){
+            await Comment.findOneAndDelete({_id: comments[i]})
+        }
+        return res.status(200).json({success: true, message: "Blog deleted successfully"});
     } catch (error) {
         console.log(error.message)
         res.status(500).json({message: "Internal Server Error"})

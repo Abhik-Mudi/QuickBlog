@@ -16,6 +16,9 @@ const useAddComment = () => {
             body: JSON.stringify({content}),
         })
         const data=await res.json();
+        if(!data.success){
+            throw new Error(data.message)
+        }
         toast.success("Comment added");
         return data;
     } catch (error) {

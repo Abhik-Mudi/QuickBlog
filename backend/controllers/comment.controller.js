@@ -33,16 +33,16 @@ export const addComment = async(req, res)=>{
 
         const blog= await BlogPost.findById(post);
         if(!blog){
-            return res.status(404).json({message: "Blog not found"})
+            return res.status(404).json({success: false, message: "Blog not found"})
         }
         blog.comments.push(comment._id)
         await blog.save();
 
         if(comment){
-            res.status(201).json({message: "Comment added successfully", data: comment})
+            res.status(201).json({success: true, message: "Comment added successfully", data: comment})
         }
     } catch (error) {
-        res.status(500).json({ message: "Internal Server Error", error: error.message });
+        res.status(500).json({success: false, message: "Internal Server Error", error: error.message });
     }
 }
 
