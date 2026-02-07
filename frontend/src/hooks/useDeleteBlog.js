@@ -18,7 +18,6 @@ const useDeleteBlog = () => {
             body: JSON.stringify({id})
         })
         const data=await res.json();
-        console.log(data)
         return data;
     } catch (error) {
         toast.error(error.message)

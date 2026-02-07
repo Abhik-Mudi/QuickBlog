@@ -19,7 +19,6 @@ const Bloglist = () => {
     const fetchBlog = async () => {
         const data = await fetchBlogs()
         setBlogData(data);
-        console.log(data);
     }
     
     useEffect(() => {

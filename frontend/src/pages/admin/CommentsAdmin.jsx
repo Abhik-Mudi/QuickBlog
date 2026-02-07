@@ -10,7 +10,6 @@ const CommentsAdmin = () => {
 
   const fetchComments=async ()=>{
     const data=await fetchAllCommentsByUser()
-    // console.log(data);
     
     setComments(data)
   }

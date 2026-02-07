@@ -16,7 +16,6 @@ export function AlertDialogDemo({id, onDeleteSuccess}) {
     const {deleteBlogById}=useDeleteBlog();
     const deleteBlog=async ()=>{
         const result = await deleteBlogById(id)
-        console.log(result)
         if (result?.success && onDeleteSuccess) {
             onDeleteSuccess()
         }

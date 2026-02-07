@@ -25,7 +25,6 @@ const AdminPanel = ({ children }) => {
     try {
       const data= await fetchBlogByUserId();
       const comm=await fetchAllCommentsByUser();
-      console.log(comm);
       setComments(comm)
       setRecent(data)
     } catch (error) {

@@ -4,9 +4,7 @@ const Subscribe = () => {
     const [userEmail, setUserEmail] = useState("")
 
     const handleSubscribe = (e) => {
-        e.preventDefault(); 
-        console.log(userEmail);
-        
+        e.preventDefault();         
     }
 
     return (
