@@ -6,9 +6,12 @@ import moment from 'moment'
 import useFetchComment from '../hooks/useFetchComment';
 import { useParams } from 'react-router-dom';
 import useAddComment from '../hooks/useAddComment';
+import { useAuthContext } from '../context/authContext';
+import toast from 'react-hot-toast';
 
 const Comments = () => {
   const {id}=useParams();
+  const { authUser } = useAuthContext();
 
   const {fetchComment}=useFetchComment();
   const {addComment}=useAddComment();
@@ -30,7 +33,19 @@ const Comments = () => {
   
   const handleComment = (e) => {
     e.preventDefault();
+    
+    if (!authUser) {
+      toast.error("Please log in to add a comment");
+      return;
+    }
+    
+    if (!comment.content.trim()) {
+      toast.error("Comment cannot be empty");
+      return;
+    }
+    
     addComment(id, comment.content);
+    setComment({ content: '' });
   }
 
   return (
