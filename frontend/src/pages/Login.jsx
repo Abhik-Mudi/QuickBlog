@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../auth.css'
 import useLogin from '../hooks/useLogin';
 import useSignup from '../hooks/useSignup';
@@ -8,6 +8,7 @@ import toast from 'react-hot-toast';
 
 const Login = () => {
   const {loading, loginUser}=useLogin();
+  const navigate=useNavigate()
   const {signupUser} = useSignup();
   
   const [isSignUpMode, setIsSignUpMode] = useState(false);
@@ -31,6 +32,7 @@ const Login = () => {
     await loginUser(username, password)
     setUsername("");
     setPassword("");
+    navigate("/admin")
   }
 
   const handleSubmitSignup =async (e)=>{
@@ -42,6 +44,7 @@ const Login = () => {
     setUsernameSignup("");  
     setEmailSignup("");
     setPasswordSignup("");
+    navigate("/admin")
   }
 
   return (

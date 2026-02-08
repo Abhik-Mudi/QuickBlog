@@ -14,7 +14,7 @@ const Comments = () => {
   const { authUser } = useAuthContext();
 
   const {fetchComment}=useFetchComment();
-  const {addComment}=useAddComment();
+  const {isAddingComment, addComment}=useAddComment();
 
   const [commentList, setCommentList] = useState([])
   
@@ -67,7 +67,10 @@ const Comments = () => {
         <h1>Add your comment</h1>
         <form onSubmit={handleComment} style={{"padding": 0}} className='w-full flex flex-col gap-2 justify-start' action="">
           <textarea value={comment.content} onChange={(e)=>setComment({...comment, content:e.target.value})} rows={5} className=' text-sm font-light border p-2 border-gray-400 rounded-md w-full' name="" id="" placeholder='Comment'></textarea>
-          <button type='submit' onClick={handleComment} className='bg-[#5044E5] w-1/4 rounded-lg px-2 py-1 self-start text-white'>Submit</button>
+          <button type='submit' onClick={handleComment} className='bg-[#5044E5] w-1/4 rounded-lg px-2 py-1 self-start text-white'>
+            <div class={`w-4 h-4 border-4 border-blue-500 border-t-transparent rounded-full ${isAddingComment ? 'animate-spin':'hidden'}`}></div>
+            <div className={isAddingComment ? 'hidden':'block'}>Publish</div>
+          </button>
         </form>
       </div>
     </div>

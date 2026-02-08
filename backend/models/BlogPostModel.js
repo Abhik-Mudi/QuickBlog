@@ -25,6 +25,11 @@ const BlogPostSchema = new mongoose.Schema({
     category: {
         type: String,
     },
+    contentType: {
+        type: String,
+        enum: ['rich', 'markdown'],
+        default: 'rich'
+    },
     isPublished: {
         type: Boolean,
         // required: true,

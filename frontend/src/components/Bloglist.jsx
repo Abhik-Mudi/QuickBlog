@@ -47,7 +47,7 @@ const Bloglist = () => {
                                 <p className="text-xs mt-2 text-gray-700 leading-relaxed line-clamp-2"
                                     style={{ minHeight: "2.5em" }} dangerouslySetInnerHTML={{
                                         "__html": blog.subtitle
-                                    }}></p>
+                                    }}></p>                            
                             </div>
                         </div>
                     )

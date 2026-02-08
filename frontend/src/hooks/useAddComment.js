@@ -1,11 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import toast from 'react-hot-toast'
 
 const isProduction = import.meta.env.PROD;
 const API_URL = isProduction ? import.meta.env.VITE_API_URL : 'http://localhost:5000';
 
 const useAddComment = () => {
+    const [isAddingComment, setIsAddingComment]=useState(false)
   const addComment = async (id, content)=>{
+    setIsAddingComment(true)
     try {
         const res = await fetch(`${API_URL}/api/comments/${id}`, {
             method: 'POST',
@@ -23,9 +25,11 @@ const useAddComment = () => {
         return data;
     } catch (error) {
         toast.error(error.message)
+    } finally {
+        setIsAddingComment(false)
     }
   }
-  return {addComment}
+  return {isAddingComment, addComment}
 }
 
 export default useAddComment

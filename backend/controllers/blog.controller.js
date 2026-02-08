@@ -20,7 +20,7 @@ export const addBlog = async (req, res) => {
         const window = new JSDOM('').window;
         const purify = DOMPurify(window);
 
-        const { title, subtitle, content, category } = req.body;
+        const { title, subtitle, content, category, contentType } = req.body;
         const author = req.user.id;
         const image = req.file;
 
@@ -48,11 +48,14 @@ export const addBlog = async (req, res) => {
 
         const imageUrl = optimizedImageUrl;
 
+        const processedContent = contentType === 'markdown' ? content : purify.sanitize(content);
+
         const newBlog = await BlogPost.create({
             title,
             subtitle,
             author,
-            content: purify.sanitize(content),
+            content: processedContent,
+            contentType: contentType || 'rich',
             image: imageUrl,
             category,
         })
@@ -71,11 +74,7 @@ export const getBlogById = async (req, res) => {
     try {
         const { id } = req.params;
         const blog = await BlogPost.findById(id).populate("author", "username");
-        const blogWithPlainText = {
-            ...blog.toObject(),
-            content: htmlToText(blog.content)
-        };
-        return res.status(200).json(blogWithPlainText)
+        return res.status(200).json(blog)
     } catch (error) {
         console.log(error.message)
         res.status(500).json({ message: "Server Error", error: error.message });
@@ -84,12 +83,8 @@ export const getBlogById = async (req, res) => {
 
 export const getAllBlogs = async (req, res) => {
     try {
-        const blogs = await BlogPost.find();
-        const processedBlogs = blogs.map(blog => ({
-            ...blog.toObject(),
-            content: htmlToText(blog.content)
-        }));
-        return res.status(200).json(processedBlogs);
+        const blogs = await BlogPost.find().populate("author", "username");
+        return res.status(200).json(blogs);
     } catch (error) {
         console.log(error.message)
         res.status(500).json({ message: "Server Error", error: error.message });
@@ -99,11 +94,7 @@ export const getAllBlogs = async (req, res) => {
 export const getBlogsByUserId=async (req, res)=>{
     try {
         const userBlogs=await BlogPost.find({author: req.user.id}).populate("author", "username")
-        const processedBlogs = userBlogs.map(blog => ({
-            ...blog.toObject(),
-            content: htmlToText(blog.content)
-        }));
-        return res.status(200).json(processedBlogs);
+        return res.status(200).json(userBlogs);
     } catch (error) {
         console.log(error.message)
         res.status(500).json({ message: "Server Error", error: error.message });
